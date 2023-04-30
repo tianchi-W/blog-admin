@@ -17,11 +17,14 @@
 import Menu from '@/components/Menu.vue'
 import Header from '@/components/Header.vue'
 import { onBeforeMount, onMounted, reactive } from 'vue'
-const emits = defineEmits([])
-const state = reactive({})
-onBeforeMount(() => {})
-onMounted(() => {})
-defineExpose({ state })
+
+import { getArticleList } from '@/request/api'
+
+getArticleList().then((res: any) => {
+  console.log(res)
+})
+// const title = await fetch('http://localhost:50/api/article').then((r) => r.json())
+// console.log(title)
 </script>
 <style lang="scss" scoped>
 .common-layout {
