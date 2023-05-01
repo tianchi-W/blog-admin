@@ -15,11 +15,21 @@
         label-width="60px"
         class="demo-ruleForm"
       >
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="ruleForm.name" type="password" autocomplete="off" />
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="验证码" prop="pverityCodeass">
+          <el-row :gutter="20" style="width: 100%">
+            <el-col :span="14">
+              <el-input v-model="verityCode" type="text" autocomplete="off"
+            /></el-col>
+            <el-col :span="6"
+              ><div class="verityCode" v-html="codeSvg.data" @click="handleVerityCode"></div
+            ></el-col>
+          </el-row>
         </el-form-item>
 
         <el-form-item class="form-bottom">
@@ -32,48 +42,73 @@
 </template>
 
 <script lang="ts" setup>
+import { toRaw } from '@vue/reactivity'
 import type { FormInstance, FormRules } from 'element-plus'
-import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { useCommonStore } from '@/stores/common'
+import { reactive, ref } from 'vue'
+import { ElNotification } from 'element-plus'
+import { getVerityCode } from '@/request/api'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const verityCode = ref('')
+const codeSvg = ref(await getVerityCode())
+const handleVerityCode = async () => {
+  console.log(codeSvg)
+  codeSvg.value = await getVerityCode()
+}
 const ruleFormRef = ref<FormInstance>()
+
+const { handleLogin } = useCommonStore()
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('Please input the password'))
   } else {
-    if (ruleForm.pass !== '') {
-      if (!ruleFormRef.value) return
-      ruleFormRef.value.validateField('pass', () => null)
-    }
     callback()
   }
 }
-const validateUserName = (rule: any, value: any, callback: any) => {
+const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === '') {
-    callback(new Error('Please input the name'))
+    callback(new Error('Please input the username'))
   } else {
-    if (ruleForm.name !== '') {
-      if (!ruleFormRef.value) return
-      ruleFormRef.value.validateField('name', () => null)
-    }
+    callback()
   }
-  callback()
 }
 
 const ruleForm = reactive({
-  pass: '',
-  name: ''
+  password: '',
+  username: ''
 })
 
 const rules = reactive<FormRules>({
-  pass: [{ validator: validatePass, trigger: 'blur' }],
-  name: [{ validator: validateUserName, trigger: 'blur' }]
+  password: [{ validator: validatePass, trigger: 'blur' }],
+  username: [{ validator: validateUsername, trigger: 'blur' }]
 })
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  formEl.validate((valid) => {
+
+  formEl.validate(async (valid) => {
     if (valid) {
-      console.log(formEl, 'submit!')
+      if (codeSvg.value.text !== verityCode.value) {
+        ElNotification({
+          title: 'Warning',
+          message: '验证码错误',
+          type: 'warning'
+        })
+        handleVerityCode()
+        return
+      }
+      console.log(toRaw(ruleForm), 'submit!')
+      ElNotification({
+        title: 'Success',
+        message: '登录成功',
+        type: 'success'
+      })
+      await handleLogin(toRaw(ruleForm))
+      ruleForm.password = ''
+      ruleForm.username = ''
+      router.push({ name: 'home' })
     } else {
       console.log('error submit!')
       return false
@@ -88,6 +123,9 @@ const resetForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <style lang="scss" scoped>
+.verityCode {
+  width: 100%;
+}
 .container {
   height: 100%;
   .form-bottom {

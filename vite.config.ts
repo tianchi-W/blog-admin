@@ -24,17 +24,17 @@ export default () => {
     },
     server: {
       cors: true,
-      open: true,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:50',
-          changeOrigin: true,
-          rewrite: (path) => {
-            console.log(path)
-            return path.replace(/\/api/, '')
-          } // 不可以省略rewrite
-        }
-      }
+      open: true
+      // proxy: {
+      //   '/api': {
+      //     target: 'http://localhost:50',
+      //     changeOrigin: true,
+      //     rewrite: (path) => {
+      //       console.log(path)
+      //       return path.replace(/\/api/, '')
+      //     } // 不可以省略rewrite
+      //   }
+      // }
     }
   })
 }

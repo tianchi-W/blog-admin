@@ -2,14 +2,14 @@ import axios from 'axios'
 
 const service = axios.create({
   // @ts-ignore
-  baseURL: import.meta.env.VITE_BASEURL,
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 30000 // 请求 30s 超时
   //   headers: {
   //     'Access-Control-Allow-Origin': '*'
   //   }
 })
 
-// // 请求拦截器
+// 请求拦截器
 // axios.interceptors.request.use(
 //   (config) => {
 //     // 每次发送请求之前判断是否存在token
@@ -33,7 +33,7 @@ service.interceptors.response.use(
       } else if (response.data.code === 510) {
         // 未登录跳转登录页
       } else {
-        return Promise.resolve(response.data)
+        return Promise.resolve(response)
       }
     } else {
       return Promise.reject(response)

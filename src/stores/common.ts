@@ -1,13 +1,25 @@
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, toRaw } from 'vue'
 import { defineStore } from 'pinia'
+import storage from '@/utils/localstorage.js'
+import { login } from '@/request/api'
 
 export const useCommonStore = defineStore('common', () => {
-  const count = ref(0)
-  const isLogin = ref(false)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const state = reactive<{ token: string | null; userName: string | null; isLogin: boolean }>({
+    token: '',
+    userName: '',
+    isLogin: false
+  })
+  async function handleLogin(ruleForm: any) {
+    const res = await login(ruleForm)
+    console.log(res)
+    if (res.code !== 200) {
+      ElMessage.error('Oops, this is a error message.')
+    } else {
+      storage.remove('token')
+      storage.set('token', res.data.token)
+    }
+    state.token = res
   }
 
-  return { count, doubleCount, increment }
+  return { state, handleLogin }
 })
