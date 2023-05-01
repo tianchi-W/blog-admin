@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
+      <el-radio-button :label="false">expand</el-radio-button>
+      <el-radio-button :label="true">collapse</el-radio-button>
+    </el-radio-group>
     <h5 class="mb-2"><div></div></h5>
     <el-menu
       active-text-color="#ffd04b"
@@ -7,6 +11,9 @@
       class="el-menu-vertical-demo"
       default-active="2"
       text-color="#fff"
+      :collapse="isCollapse"
+      @open="handleOpen"
+      @close="handleClose"
     >
       <menu-item :menuList="menuList"></menu-item>
     </el-menu>
@@ -16,6 +23,7 @@
 <script lang="ts" setup>
 import MenuItem from '@/components/MenuItem.vue'
 import { ref, reactive } from 'vue'
+const isCollapse = ref(false)
 
 //菜单数据
 let menuList = reactive([
@@ -146,20 +154,20 @@ let menuList = reactive([
 ])
 </script>
 <style lang="scss" scoped>
-.container {
-  height: 100%;
-  background-color: #545c64;
-  .mb-2 {
-    padding: 10px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    div {
-      height: 30px;
-      background-color: #0e61b5;
-      width: 100%;
-    }
-  }
-}
+// .container {
+//   height: 100%;
+//   background-color: #545c64;
+//   .mb-2 {
+//     // padding: 10px 30px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     text-align: center;
+//     div {
+//       height: 30px;
+//       background-color: #0e61b5;
+//       width: 100%;
+//     }
+//   }
+// }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100%">
-      <el-aside height="100%" width="200px"><Menu></Menu></el-aside>
+      <el-aside><Menu></Menu></el-aside>
       <el-container>
         <el-header>
           <Header></Header>
@@ -27,12 +27,12 @@ getArticleList().then((res: any) => {
 // console.log(title)
 </script>
 <style lang="scss" scoped>
-.common-layout {
-  height: 100%;
-  .el-header {
-    background-color: var(--el-bg-color-page);
-    color: var(--el-text-color-primary);
-    line-height: var(--el-header-height);
-  }
-}
+// .common-layout {
+//   height: 100%;
+//   .el-header {
+//     background-color: var(--el-bg-color-page);
+//     color: var(--el-text-color-primary);
+//     line-height: var(--el-header-height);
+//   }
+// }
 </style>

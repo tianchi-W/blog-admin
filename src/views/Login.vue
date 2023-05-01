@@ -46,10 +46,10 @@ import { toRaw } from '@vue/reactivity'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useCommonStore } from '@/stores/common'
 import { reactive, ref } from 'vue'
-import { ElNotification } from 'element-plus'
 import { getVerityCode } from '@/request/api'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
 const verityCode = ref('')
 const codeSvg = ref(await getVerityCode())
 const handleVerityCode = async () => {
@@ -58,7 +58,7 @@ const handleVerityCode = async () => {
 }
 const ruleFormRef = ref<FormInstance>()
 
-const { handleLogin } = useCommonStore()
+const { handleLogin, state } = useCommonStore()
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -90,25 +90,23 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
   formEl.validate(async (valid) => {
     if (valid) {
-      if (codeSvg.value.text !== verityCode.value) {
-        ElNotification({
-          title: 'Warning',
-          message: '验证码错误',
-          type: 'warning'
-        })
-        handleVerityCode()
-        return
-      }
-      console.log(toRaw(ruleForm), 'submit!')
-      ElNotification({
-        title: 'Success',
-        message: '登录成功',
-        type: 'success'
-      })
+      // if (codeSvg.value.text !== verityCode.value) {
+      //   ElNotification({
+      //     title: 'Warning',
+      //     message: '验证码错误',
+      //     type: 'warning'
+      //   })
+      //   handleVerityCode()
+      //   return
+      // }
+      // console.log(toRaw(ruleForm), 'submit!')
+
       await handleLogin(toRaw(ruleForm))
+      console.log(state)
+      state.isLogin && router.push({ name: 'home' })
+
       ruleForm.password = ''
       ruleForm.username = ''
-      router.push({ name: 'home' })
     } else {
       console.log('error submit!')
       return false
