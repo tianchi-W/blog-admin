@@ -17,7 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     const { token } = storeToRefs(useCommonStore())
-    console.log(token.value)
+    console.log(config)
     // 每次发送请求之前判断是否存在token
     // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况，此处token一般是用户完成登录后储存到localstorage里的
     token.value && (config.headers.Authorization = 'bearer ' + token.value)
@@ -32,6 +32,7 @@ service.interceptors.response.use(
   // @ts-ignore
   (response) => {
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
+    console.log(response)
     // 否则的话抛出错误
     if (response.status === 200) {
       if (response.data.code !== 200) {
@@ -51,6 +52,7 @@ service.interceptors.response.use(
   },
   (error) => {
     // 我们可以在这里对异常状态作统一处理
+    console.log(error)
     if (error.response.status) {
       // 处理请求失败的情况
       // 对不同返回码对相应处理
@@ -97,5 +99,22 @@ export function httpPost({ url, data = {}, params = {} }) {
     }).then((res) => {
       resolve(res.data)
     })
+  })
+}
+
+//删除请求
+export function httpDelete({ url, data }) {
+  return new Promise((resolve, reject) => {
+    service({
+      method: 'DELETE',
+      url,
+      data
+    })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
   })
 }

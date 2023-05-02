@@ -14,12 +14,21 @@ export const routes = [
     component: () => import('@/views/UsersView.vue')
   },
   {
-    path: '/article',
+    path: 'article',
     name: 'article',
     meta: {
-      title: '文章管理'
+      title: '文章管理',
+      showFator: true
     },
-    component: () => import('@/views/Article.vue')
+    component: () => import('@/views/Article.vue'),
+    children: [
+      {
+        path: 'add',
+        name: 'addArticle',
+        component: () => import('@/views/AddArticle.vue'),
+        meta: { showFator: false }
+      }
+    ]
   },
   {
     path: '/setting',

@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "next",
     "axios": "^1.4.0",
     "pinia": "^2.0.32",
     "pinia-plugin-persist": "^1.0.0",
