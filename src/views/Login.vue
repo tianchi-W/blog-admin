@@ -58,7 +58,7 @@ const handleVerityCode = async () => {
 }
 const ruleFormRef = ref<FormInstance>()
 
-const { handleLogin, state } = useCommonStore()
+const { handleLogin, isLogin } = toRaw(useCommonStore())
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -102,8 +102,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
       // console.log(toRaw(ruleForm), 'submit!')
 
       await handleLogin(toRaw(ruleForm))
-      console.log(state)
-      state.isLogin && router.push({ name: 'home' })
+      console.log(isLogin.value, 'isLogin')
+      isLogin.value && router.push({ name: 'home' })
 
       ruleForm.password = ''
       ruleForm.username = ''

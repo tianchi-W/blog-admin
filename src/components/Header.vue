@@ -10,23 +10,25 @@
       </el-col>
       <el-col :span="4"
         ><div class="grid-content ep-bg-purple">
-          <el-avatar class="avatar" :icon="UserFilled" />
-          <span style="margin-left: 20px">请登录</span>
+          <el-avatar class="avatar" :icon="UserFilled" @click="login" />
+          <span style="margin-left: 20px">{{ isLogin ? userName : '请登录' }}</span>
         </div></el-col
       >
     </el-row>
   </div>
 </template>
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, reactive } from 'vue'
+import { onBeforeMount, onMounted, reactive, toRaw } from 'vue'
 import { UserFilled } from '@element-plus/icons-vue'
 import { useCounterStore } from '@/stores/counter'
+import { useCommonStore } from '@/stores/common'
+import router from '@/router/index'
 import { storeToRefs } from 'pinia'
 const { count, doubleCount } = storeToRefs(useCounterStore())
-const { increment } = useCounterStore()
-const handleLogin = () => {
-  console.log(increment, 'in')
-  increment()
+const { loginOut, handleLogin } = useCommonStore()
+const { isLogin, userName } = storeToRefs(useCommonStore())
+const login = () => {
+  isLogin.value ? loginOut() : router.push({ name: 'login' })
 }
 const emits = defineEmits([])
 const state = reactive({})

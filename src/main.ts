@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import pinia from './stores/store'
+import piniaPersist from 'pinia-plugin-persist'
 
 import App from './App.vue'
 import router from './router'
@@ -16,8 +17,9 @@ import 'element-plus/theme-chalk/el-message-box.css'
 
 const app = createApp(App)
 
-app.use(createPinia())
+pinia.use(piniaPersist)
 app.use(router)
+app.use(pinia)
 app.mount('#app')
 
 //注册全局图标
