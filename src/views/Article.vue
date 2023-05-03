@@ -15,15 +15,31 @@
       </el-icon>
       新增文章</el-button
     >
-    <el-table :key="isChange" :data="articleList" style="width: 100%">
+    <el-table :data="articleList" height="650" style="width: 100%">
       <el-table-column fixed prop="date" label="Date" width="150" />
       <el-table-column prop="title" label="标题" width="180" />
-      <el-table-column prop="body" label="内容" />
+      <el-table-column prop="content" label="内容" show-overflow-tooltip />
       <el-table-column prop="introduction" label="简介" width="180" />
       <el-table-column fixed="right" label="Operations" width="200">
         <template #default="scoped">
-          <el-button link type="primary" size="small" @click="handleClick">Detail</el-button>
-          <el-button link type="primary" size="small">Edit</el-button>
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="
+              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'detail' } })
+            "
+            >Detail</el-button
+          >
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="
+              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'edit' } })
+            "
+            >Edit</el-button
+          >
           <el-popconfirm
             title="Are you sure to delete this?"
             @cancel="cancelEvent"
@@ -40,28 +56,27 @@
   <router-view></router-view>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, watch, computed } from 'vue'
+import { reactive, ref, watch, computed, onMounted } from 'vue'
 import { getArticleList, delArticle } from '@/request/api'
+import { onBeforeRouteUpdate } from 'vue-router'
 import { Document, Menu as IconMenu, Location, Setting, House } from '@element-plus/icons-vue'
-// const data = reactive({
-//   list: []
-// })
-let listInfo = await getArticleList()
-console.log(listInfo, 'listInfo')
-const articleList = computed(() => {
-  return [...listInfo.data]
-})
 
-const isChange = ref(true)
+const articleList = ref([])
+const handleShow = () => {
+  getArticleList().then((r) => {
+    articleList.value = r.data
+  })
+}
+handleShow()
+onBeforeRouteUpdate((to, from, next) => {
+  handleShow()
+  next()
+})
 const handleClick = async (scoped) => {
   delArticle({ _id: scoped.row._id })
-  listInfo = await getArticleList()
-  isChange.value = !isChange.value
+  handleShow()
 }
-watch(articleList, async () => {
-  console.log(1)
-  await getArticleList()
-})
+
 const cancelEvent = () => {
   console.log('cancel')
 }

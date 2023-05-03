@@ -39,11 +39,14 @@ const ruleFormRef = ref<FormInstance>()
 import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { useCommonStore } from '@/stores/common'
 import { storeToRefs } from 'pinia'
-import { addArticle } from '@/request/api'
+import { addArticle, getArticleById, upDateArticle } from '@/request/api'
+import { useRoute } from 'vue-router'
 import router from '@/router'
 const { userName } = storeToRefs(useCommonStore())
+const { query } = useRoute()
+
 const text = ref('')
-const form = reactive({
+const form = ref({
   title: '',
   //   author: userName.value,
   introduction: '',
@@ -51,6 +54,14 @@ const form = reactive({
   content: '',
   date: ''
 })
+const getArticle = async () => {
+  if (query.id) {
+    const res = await getArticleById({ _id: query.id })
+    form.value = res.data[0]
+  }
+}
+getArticle()
+
 const rules = reactive<FormRules>({
   title: [{ required: true, type: 'string', message: '请输入文章标题', trigger: 'blur' }],
   //   author: [{ required: true, type: 'string', message: '请输入作者名', trigger: 'blur' }],
@@ -64,7 +75,18 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      const res = await addArticle(form)
+      if (query.type === 'edit') {
+        await upDateArticle({
+          _id: query.id,
+          title: form.value.title,
+          instroduction: form.value.introduction,
+          content: form.value.content,
+          date: form.value.date
+        })
+      } else {
+        await addArticle(form.value)
+      }
+
       formEl.resetFields()
       router.push({ name: 'article' })
     } else {
