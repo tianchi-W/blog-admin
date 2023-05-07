@@ -11,7 +11,7 @@ export const useCommonStore = defineStore('common', {
   actions: {
     handleLogin: async function (ruleForm: any) {
       storage.remove('accessToken')
-      const res = await login(ruleForm)
+      const res: any = await login(ruleForm)
       if (res.code !== 200) {
         ElMessage.error('Oops, this is a error message.')
       } else {

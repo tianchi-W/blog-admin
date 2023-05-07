@@ -61,7 +61,7 @@ service.interceptors.response.use(
   }
 )
 // get 请求
-export function httpGet({ url, params = {} }) {
+export function httpGet({ url, params = {} }: { url: string; params: any }) {
   return new Promise((resolve, reject) => {
     service
       .get(url, {

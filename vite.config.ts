@@ -24,7 +24,8 @@ export default () => {
     },
     server: {
       cors: true,
-      open: true
+      open: true,
+      port: 8000
       // proxy: {
       //   '/api': {
       //     target: 'http://localhost:50',

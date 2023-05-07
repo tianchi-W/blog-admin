@@ -1,7 +1,7 @@
 // 封装操作localstorage本地存储的方法  模块化
 
 var storage = {
-  set(key, value) {
+  set(key: any, value) {
     localStorage.setItem(key, JSON.stringify(value))
     // localStorage.key = value;
     // localStorage[key] = value;

@@ -5,5 +5,6 @@ export const addArticle = (data = {}, params = {}) => httpPost({ url: '/article'
 export const delArticle = (data = {}) => httpDelete({ url: '/article', data })
 export const upDateArticle = (data = {}, params = {}) => httpPut({ url: '/article', data })
 
+//登录注册
 export const getVerityCode = (params = {}) => httpGet({ url: '/users/getInfo', params })
 export const login = (data = {}, params = {}) => httpPost({ url: '/users/login', data })
