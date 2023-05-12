@@ -6,7 +6,8 @@ export const useCommonStore = defineStore('common', {
   state: () => ({
     token: '',
     userName: '',
-    isLogin: false
+    isLogin: false,
+    isCollapse: false
   }),
   actions: {
     handleLogin: async function (ruleForm: any) {
@@ -30,6 +31,10 @@ export const useCommonStore = defineStore('common', {
       this.token = ''
       this.isLogin = false
       this.userName = ''
+    },
+    handleIsCollapse: function () {
+      console.log(this.isCollapse)
+      this.isCollapse = !this.isCollapse
     }
   },
 

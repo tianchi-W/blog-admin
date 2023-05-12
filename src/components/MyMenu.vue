@@ -7,6 +7,7 @@
     default-active="2"
     class="el-menu-vertical-demo"
     background-color="#545c64"
+    :collapse-transition="false"
     text-color="#fff"
     active-text-color="#ffd04b"
     :collapse="isCollapse"

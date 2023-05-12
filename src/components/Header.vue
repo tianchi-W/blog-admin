@@ -2,13 +2,13 @@
   <div class="container">
     <el-row :gutter="20">
       <el-col class="flex-center" :span="4"
-        ><div class="grid-content ep-bg-purple">
+        ><div class="grid-content ep-bg-purple" style="cursor: pointer" @click="handleIsCollapse">
           <el-icon><Operation /></el-icon></div
       ></el-col>
-      <el-col :span="16"
+      <el-col :span="14"
         ><div class="grid-content ep-bg-purple">{{ count }}{{ doubleCount }}</div>
       </el-col>
-      <el-col :span="4"
+      <el-col :span="6"
         ><div class="grid-content ep-bg-purple">
           <el-avatar class="avatar" :icon="UserFilled" @click="login" />
           <span style="margin-left: 20px">{{ isLogin ? userName : '请登录' }}</span>
@@ -24,7 +24,8 @@ import { useCounterStore } from '@/stores/counter'
 import { useCommonStore } from '@/stores/common'
 import router from '@/router/index'
 import { storeToRefs } from 'pinia'
-const { count, doubleCount } = storeToRefs(useCounterStore())
+const { count, doubleCount, isCollapse } = storeToRefs(useCounterStore())
+const { handleIsCollapse } = useCommonStore()
 const { loginOut, handleLogin } = useCommonStore()
 const { isLogin, userName } = storeToRefs(useCommonStore())
 const login = () => {

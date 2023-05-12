@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100%">
-      <el-aside style="width: auto"><my-menu :isCollapse="isCollapse"></my-menu></el-aside>
+      <el-aside width="auto"><my-menu :isCollapse="isCollapse"></my-menu></el-aside>
       <el-container>
         <el-header>
           <Header></Header>
@@ -16,9 +16,10 @@
 <script lang="ts" setup>
 import MyMenu from '@/components/MyMenu.vue'
 import Header from '@/components/Header.vue'
-import { ref } from 'vue'
-const isCollapse = ref(false)
+import { ref, toRefs } from 'vue'
+import { useCommonStore } from '@/stores/common'
 
+const { isCollapse } = toRefs(useCommonStore())
 // const title = await fetch('http://localhost:50/api/article').then((r) => r.json())
 // console.log(title)
 </script>

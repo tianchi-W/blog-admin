@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router'
 import router from '@/router'
 const { userName } = storeToRefs(useCommonStore())
 const { query } = useRoute()
-
+console.log(userName.value)
 const text = ref('')
 const form = ref({
   title: '',

@@ -30,8 +30,8 @@
       新增文章</el-button
     >
     <el-table :data="articleList" height="600" style="width: 100%">
-      <!-- <el-table-column fixed prop="author" label="作者" width="150" /> -->
       <el-table-column fixed prop="date" label="Date" width="150" />
+      <el-table-column prop="username" label="作者" width="150" />
       <el-table-column prop="title" label="标题" width="180" />
       <el-table-column prop="content" label="内容" show-overflow-tooltip />
       <el-table-column prop="introduction" label="简介" width="180" />
