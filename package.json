@@ -12,7 +12,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "next",
+    "axios": "^1.4.0",
+    "moment": "^2.29.4",
+    "momentjs": "^2.0.0",
     "pinia": "^2.0.32",
+    "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

@@ -1,11 +1,12 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100%">
-      <el-aside height="100%" width="200px"><Menu></Menu></el-aside>
+      <el-aside width="auto"><my-menu :isCollapse="isCollapse"></my-menu></el-aside>
       <el-container>
         <el-header>
           <Header></Header>
         </el-header>
+        <VisitRoute />
         <el-main>
           <RouterView> </RouterView>
         </el-main>
@@ -14,14 +15,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Menu from '@/components/Menu.vue'
+import MyMenu from '@/components/MyMenu.vue'
 import Header from '@/components/Header.vue'
-import { onBeforeMount, onMounted, reactive } from 'vue'
-const emits = defineEmits([])
-const state = reactive({})
-onBeforeMount(() => {})
-onMounted(() => {})
-defineExpose({ state })
+import VisitRoute from '@/components/VisitRoute.vue'
+import { ref, toRefs } from 'vue'
+import { useCommonStore } from '@/stores/common'
+
+const { isCollapse } = toRefs(useCommonStore())
 </script>
 <style lang="scss" scoped>
 .common-layout {
