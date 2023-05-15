@@ -7,7 +7,8 @@
       closable
       type="warning"
       @close="handleClose(tag)"
-      style="margin-right: 20px"
+      @click="handleChoose(tag)"
+      style="margin-right: 20px; cursor: pointer"
     >
       {{ tag.name }}
     </el-tag>
@@ -17,6 +18,8 @@
 import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { useCommonStore } from '@/stores/common'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const { visitedRoutes } = storeToRefs(useCommonStore())
 const { handleRemoveVisitRoute } = useCommonStore()
 console.log(visitedRoutes.value, 'route')
@@ -25,6 +28,10 @@ const handleClose = (val: { name: string }[]) => {
     return item.name !== val.name
   })
   handleRemoveVisitRoute(routes)
+}
+const handleChoose = (tag) => {
+  console.log(tag, 'tag')
+  router.push({ name: tag.route.name })
 }
 const emits = defineEmits([])
 const state = reactive({})

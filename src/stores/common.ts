@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { login } from '@/request/api'
 import storage from '@/utils/localstorage.js'
+
 import type { RouteRecordRaw } from 'vue-router'
 
 export const useCommonStore = defineStore('common', {
@@ -10,12 +11,12 @@ export const useCommonStore = defineStore('common', {
     isLogin: false,
     isCollapse: false,
     avatar: '',
-    visitedRoutes: [] as { name: string }[]
+    visitedRoutes: [] as { name: string; route: RouteRecordRaw }[]
   }),
   actions: {
     handleAddVisitRoute: function (val: RouteRecordRaw) {
       // console.log(val, 'val')
-      this.visitedRoutes = [...this.visitedRoutes, { name: val.meta.title }]
+      this.visitedRoutes = [...this.visitedRoutes, { name: val.meta.title, route: val }]
     },
     handleRemoveVisitRoute: function (val: { name: string }[]) {
       this.visitedRoutes = val
