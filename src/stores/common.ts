@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { login } from '@/request/api'
 import storage from '@/utils/localstorage.js'
+import type { RouteRecordRaw } from 'vue-router'
 
 export const useCommonStore = defineStore('common', {
   state: () => ({
@@ -8,9 +9,17 @@ export const useCommonStore = defineStore('common', {
     userName: '',
     isLogin: false,
     isCollapse: false,
-    avatar: ''
+    avatar: '',
+    visitedRoutes: [] as { name: string }[]
   }),
   actions: {
+    handleAddVisitRoute: function (val: RouteRecordRaw) {
+      // console.log(val, 'val')
+      this.visitedRoutes = [...this.visitedRoutes, { name: val.meta.title }]
+    },
+    handleRemoveVisitRoute: function (val: { name: string }[]) {
+      this.visitedRoutes = val
+    },
     handleLogin: async function (ruleForm: any) {
       storage.remove('accessToken')
       const res: any = await login(ruleForm)
@@ -34,6 +43,7 @@ export const useCommonStore = defineStore('common', {
       this.isLogin = false
       this.userName = ''
       this.avatar = ''
+      this.visitedRoutes = []
     },
     handleIsCollapse: function () {
       console.log(this.isCollapse)
@@ -47,7 +57,7 @@ export const useCommonStore = defineStore('common', {
       {
         key: 'accessToken', //自定义 Key值
         storage: sessionStorage, // 选择存储方式
-        paths: ['isLogin', 'userName', 'token', 'avatar'] // state 中的字段名，按组打包储存
+        paths: ['isLogin', 'userName', 'token', 'avatar', 'visitedRoutes'] // state 中的字段名，按组打包储存
         // assessToken,数据不为空时localStorage才会去存储，数据为空时，不会去存储（）
       }
     ]

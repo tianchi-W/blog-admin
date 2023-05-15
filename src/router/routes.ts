@@ -2,7 +2,7 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    meta: { title: '首页' },
+    meta: { title: '首页', showHeader: true },
     component: () => import('@/views/HomeView.vue')
   },
   {
@@ -26,7 +26,7 @@ export const routes = [
         path: 'add',
         name: 'addArticle',
         component: () => import('@/views/AddArticle.vue'),
-        meta: { showFator: false }
+        meta: { showFator: false, title: '新增文章' }
       }
     ]
   },

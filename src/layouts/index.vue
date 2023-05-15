@@ -6,6 +6,7 @@
         <el-header>
           <Header></Header>
         </el-header>
+        <VisitRoute />
         <el-main>
           <RouterView> </RouterView>
         </el-main>
@@ -16,12 +17,11 @@
 <script lang="ts" setup>
 import MyMenu from '@/components/MyMenu.vue'
 import Header from '@/components/Header.vue'
+import VisitRoute from '@/components/VisitRoute.vue'
 import { ref, toRefs } from 'vue'
 import { useCommonStore } from '@/stores/common'
 
 const { isCollapse } = toRefs(useCommonStore())
-// const title = await fetch('http://localhost:50/api/article').then((r) => r.json())
-// console.log(title)
 </script>
 <style lang="scss" scoped>
 .common-layout {
