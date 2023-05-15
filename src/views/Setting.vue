@@ -1,5 +1,11 @@
 <template>
-  <div class="container">setting</div>
+  <el-card class="box-card">
+    <template #header>
+      <div class="card-header">
+        <span>Card name</span>
+      </div>
+    </template>
+  </el-card>
 </template>
 <script lang="ts" setup>
 import { onBeforeMount, onMounted, reactive } from 'vue'

@@ -7,7 +7,8 @@ export const useCommonStore = defineStore('common', {
     token: '',
     userName: '',
     isLogin: false,
-    isCollapse: false
+    isCollapse: false,
+    avatar: ''
   }),
   actions: {
     handleLogin: async function (ruleForm: any) {
@@ -25,12 +26,14 @@ export const useCommonStore = defineStore('common', {
         this.token = res.data.token
         this.isLogin = true
         this.userName = res.data.username
+        this.avatar = res.data.user.avatar
       }
     },
     loginOut: function () {
       this.token = ''
       this.isLogin = false
       this.userName = ''
+      this.avatar = ''
     },
     handleIsCollapse: function () {
       console.log(this.isCollapse)
@@ -44,7 +47,7 @@ export const useCommonStore = defineStore('common', {
       {
         key: 'accessToken', //自定义 Key值
         storage: sessionStorage, // 选择存储方式
-        paths: ['isLogin', 'userName', 'token'] // state 中的字段名，按组打包储存
+        paths: ['isLogin', 'userName', 'token', 'avatar'] // state 中的字段名，按组打包储存
         // assessToken,数据不为空时localStorage才会去存储，数据为空时，不会去存储（）
       }
     ]

@@ -8,3 +8,6 @@ export const upDateArticle = (data = {}, params = {}) => httpPut({ url: '/articl
 //登录注册
 export const getVerityCode = (params = {}) => httpGet({ url: '/users/getInfo', params })
 export const login = (data = {}, params = {}) => httpPost({ url: '/users/login', data })
+
+//用户信息展示
+export const getUserInfoList = (params = {}) => httpGet({ url: '/users/list', params })
