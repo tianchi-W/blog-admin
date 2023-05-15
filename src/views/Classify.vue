@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <template #header>
       <div class="card-header">
-        <span>Card name</span>
+        <span>classify</span>
       </div>
     </template>
     123

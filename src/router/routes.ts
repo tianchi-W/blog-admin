@@ -31,6 +31,25 @@ export const routes = [
     ]
   },
   {
+    path: '/tag',
+    name: 'tag',
+    meta: {
+      title: '标签管理',
+      icon: 'tag'
+    },
+    component: () => import('@/views/Tag.vue')
+  },
+
+  {
+    path: '/classify',
+    name: 'classify',
+    meta: {
+      title: '分类管理',
+      icon: 'classify'
+    },
+    component: () => import('@/views/classify.vue')
+  },
+  {
     path: '/setting',
     name: 'setting',
     meta: {

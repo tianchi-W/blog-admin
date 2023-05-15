@@ -29,7 +29,7 @@
       </el-icon>
       新增文章</el-button
     >
-    <el-table :data="articleList" height="600" style="width: 100%">
+    <el-table :data="articleList" height="560" style="width: 100%">
       <el-table-column fixed prop="date" label="Date" width="150" />
       <el-table-column prop="username" label="作者" width="150" />
       <el-table-column prop="title" label="标题" width="180" />
