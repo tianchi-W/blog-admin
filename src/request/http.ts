@@ -3,7 +3,7 @@ import axios from 'axios'
 import router from '@/router/index'
 import { storeToRefs } from 'pinia'
 import { useCommonStore } from '@/stores/common'
-
+import qs from 'qs'
 const service = axios.create({
   // @ts-ignore
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -18,6 +18,7 @@ service.interceptors.request.use(
   (config) => {
     const { token } = storeToRefs(useCommonStore())
     console.log(config)
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 每次发送请求之前判断是否存在token
     // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况，此处token一般是用户完成登录后储存到localstorage里的
     token.value && (config.headers.Authorization = 'bearer ' + token.value)
@@ -76,13 +77,13 @@ export function httpGet({ url, params = {} }: { url: string; params: any }) {
   })
 }
 
-// post
 // post请求
 export function httpPost({ url, data = {}, params = {} }) {
   return new Promise((resolve, reject) => {
     service({
       url,
       method: 'post',
+
       transformRequest: [
         function (data) {
           let ret = ''
@@ -140,6 +141,7 @@ export function httpPut({ url, data = {}, params = {} }) {
       // url参数
       params
     }).then((res) => {
+      console.log(res.data, 'data')
       resolve(res.data)
     })
   })

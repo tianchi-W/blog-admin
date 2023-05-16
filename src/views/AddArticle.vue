@@ -10,15 +10,34 @@
       </div>
     </template>
     <el-form ref="ruleFormRef" status-icon :model="form" :rules="rules" label-width="120px">
-      <!-- <el-form-item label="文章作者" prop="author">
-        <el-input v-model="form.author" />
-      </el-form-item> -->
+      <el-form-item label="文章作者" prop="author">
+        <el-input v-model="form.author" disabled />
+      </el-form-item>
       <el-form-item label="文章标题" prop="title">
         <el-input v-model="form.title" />
       </el-form-item>
       <el-form-item label="文章介绍" prop="introduction">
         <el-input v-model="form.introduction" />
       </el-form-item>
+      <el-form-item label="添加标签" prop="tagtitle">
+        <el-select
+          v-model="form.tagtitle"
+          multiple
+          placeholder="Select"
+          style="width: 240px"
+          @visible-change="gettagtitle"
+          @change="handleTagChange"
+          value-key="title"
+        >
+          <el-option
+            v-for="item in tagtitle"
+            :key="item._id"
+            :label="item.title"
+            :value="item.title"
+          />
+        </el-select>
+      </el-form-item>
+
       <el-form-item label="写作时间" prop="date">
         <el-date-picker v-model="form.date" type="date" placeholder="Pick a date" />
       </el-form-item>
@@ -36,7 +55,8 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 const ruleFormRef = ref<FormInstance>()
-import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue'
+import { getTagList } from '@/request/api'
 import { useCommonStore } from '@/stores/common'
 import { storeToRefs } from 'pinia'
 import { addArticle, getArticleById, upDateArticle } from '@/request/api'
@@ -44,12 +64,23 @@ import { useRoute } from 'vue-router'
 import router from '@/router'
 const { userName } = storeToRefs(useCommonStore())
 const { query } = useRoute()
-console.log(userName.value)
+const options = ref()
+const tagtitle = computed(() => {
+  return options.value?.data.tag
+})
+const gettagtitle = async () => {
+  console.log(form.value, 'form')
+  options.value = await getTagList()
+}
+const handleTagChange = () => {
+  console.log(form.value)
+}
 const text = ref('')
 const form = ref({
   title: '',
-  //   author: userName.value,
+  author: userName.value,
   introduction: '',
+  tagtitle: [],
   //   body: '',
   content: '',
   date: ''
@@ -76,12 +107,14 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       if (query.type === 'edit') {
+        console.log(form.value.tagtitle, 'tsga')
         await upDateArticle({
           _id: query.id,
           title: form.value.title,
           instroduction: form.value.introduction,
           content: form.value.content,
-          date: form.value.date
+          date: form.value.date,
+          tagtitle: form.value.tagtitle
         })
       } else {
         await addArticle(form.value)

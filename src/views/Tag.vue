@@ -105,7 +105,6 @@ const tagList = computed(() => {
 })
 const getTags = async () => {
   tagData.value = await getTagList()
-  console.log(tagList)
 }
 getTags()
 const postTag = async () => {
