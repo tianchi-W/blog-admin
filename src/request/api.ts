@@ -18,3 +18,10 @@ export const getTagById = (data = {}) => httpPost({ url: '/tag/info', data })
 export const addTag = (data = {}) => httpPost({ url: '/tag', data })
 export const delTag = (data = {}) => httpDelete({ url: '/tag', data })
 export const upDateTag = (data = {}) => httpPut({ url: '/tag', data })
+
+//classify
+export const getClassifyList = (params = {}) => httpGet({ url: '/Classify', params })
+export const getClassifyById = (data = {}) => httpPost({ url: '/Classify/info', data })
+export const addClassify = (data = {}) => httpPost({ url: '/Classify', data })
+export const delClassify = (data = {}) => httpDelete({ url: '/tag', data })
+export const upDateClassify = (data = {}) => httpPut({ url: '/Classify', data })

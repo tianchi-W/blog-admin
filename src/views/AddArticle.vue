@@ -19,6 +19,21 @@
       <el-form-item label="文章介绍" prop="introduction">
         <el-input v-model="form.introduction" />
       </el-form-item>
+      <el-form-item label=" 分类" prop="classifyname">
+        <el-select
+          v-model="form.classifyname"
+          placeholder="Select"
+          style="width: 240px"
+          @visible-change="getclassifys"
+        >
+          <el-option
+            v-for="item in classifysname"
+            :key="item._id"
+            :label="item.title"
+            :value="item.title"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="添加标签" prop="tagtitle">
         <el-select
           v-model="form.tagtitle"
@@ -26,7 +41,6 @@
           placeholder="Select"
           style="width: 240px"
           @visible-change="gettagtitle"
-          @change="handleTagChange"
           value-key="title"
         >
           <el-option
@@ -56,7 +70,7 @@
 import type { FormInstance, FormRules } from 'element-plus'
 const ruleFormRef = ref<FormInstance>()
 import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue'
-import { getTagList } from '@/request/api'
+import { getTagList, getClassifyList } from '@/request/api'
 import { useCommonStore } from '@/stores/common'
 import { storeToRefs } from 'pinia'
 import { addArticle, getArticleById, upDateArticle } from '@/request/api'
@@ -65,6 +79,7 @@ import router from '@/router'
 const { userName } = storeToRefs(useCommonStore())
 const { query } = useRoute()
 const options = ref()
+const classOption = ref()
 const tagtitle = computed(() => {
   return options.value?.data.tag
 })
@@ -72,15 +87,21 @@ const gettagtitle = async () => {
   console.log(form.value, 'form')
   options.value = await getTagList()
 }
-const handleTagChange = () => {
-  console.log(form.value)
+
+const getclassifys = async () => {
+  classOption.value = await getClassifyList()
+  console.log(classifysname, 'kkk')
 }
-const text = ref('')
+
+const classifysname = computed(() => {
+  return classOption.value?.data.classify
+})
 const form = ref({
   title: '',
   author: userName.value,
   introduction: '',
   tagtitle: [],
+  classifyname: '',
   //   body: '',
   content: '',
   date: ''
@@ -114,6 +135,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
           instroduction: form.value.introduction,
           content: form.value.content,
           date: form.value.date,
+          classifyname: form.value.classifyname,
           tagtitle: form.value.tagtitle
         })
       } else {
