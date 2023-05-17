@@ -23,13 +23,13 @@ const router = useRouter()
 const { visitedRoutes } = storeToRefs(useCommonStore())
 const { handleRemoveVisitRoute } = useCommonStore()
 console.log(visitedRoutes.value, 'route')
-const handleClose = (val: { name: string }[]) => {
+const handleClose = (val: { name: string }) => {
   const routes = visitedRoutes.value.filter((item) => {
     return item.name !== val.name
   })
   handleRemoveVisitRoute(routes)
 }
-const handleChoose = (tag) => {
+const handleChoose = (tag: any) => {
   console.log(tag, 'tag')
   router.push({ name: tag.route.name })
 }

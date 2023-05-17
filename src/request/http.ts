@@ -17,7 +17,6 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     const { token } = storeToRefs(useCommonStore())
-    console.log(config)
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 每次发送请求之前判断是否存在token
     // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况，此处token一般是用户完成登录后储存到localstorage里的
@@ -25,7 +24,7 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    return Promise.error(error)
+    return console.error(error)
   }
 )
 //   响应拦截器
@@ -33,7 +32,6 @@ service.interceptors.response.use(
   // @ts-ignore
   (response) => {
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
-    console.log(response)
     // 否则的话抛出错误
     if (response.status === 200) {
       if (response.data.code !== 200) {

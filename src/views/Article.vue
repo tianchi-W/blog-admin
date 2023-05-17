@@ -84,9 +84,8 @@
       style="margin-top: 20px"
       background
       v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
       layout="prev, pager, next"
-      :page-size="3"
+      :pageSize="3"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :total="total"
