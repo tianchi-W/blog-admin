@@ -11,7 +11,7 @@ export const useCommonStore = defineStore('common', {
     isLogin: false,
     isCollapse: false,
     avatar: '',
-    visitedRoutes: [] as { name: string; route: RouteRecordRaw }[]
+    visitedRoutes: [] as { name: string; route?: RouteRecordRaw }[]
   }),
   actions: {
     handleAddVisitRoute: function (val: RouteRecordRaw) {

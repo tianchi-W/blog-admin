@@ -47,7 +47,7 @@ export const routes = [
       title: '分类管理',
       icon: 'classify'
     },
-    component: () => import('@/views/classify.vue')
+    component: () => import('@/views/Classify.vue')
   },
   {
     path: '/setting',

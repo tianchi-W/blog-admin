@@ -108,7 +108,7 @@ const form = ref({
 })
 const getArticle = async () => {
   if (query.id) {
-    const res = await getArticleById({ _id: query.id })
+    const res: any = await getArticleById({ _id: query.id })
     form.value = res.data[0]
   }
 }

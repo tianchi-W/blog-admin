@@ -132,7 +132,7 @@ const onSubmit = async () => {
   loading.value = true
   if (formLabelAlign.title) {
     if (isStatus.value === 'add') {
-      const res = await addTag(formLabelAlign)
+      const res: any = await addTag(formLabelAlign)
       if (res.data.code == 11000) {
         ElNotification({
           title: '警告',

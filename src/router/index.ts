@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login.vue')
+      component: () => import('@/views/Login.vue')
     },
     {
       path: '/404',
@@ -34,7 +34,7 @@ const router = createRouter({
   ] as RouteRecordRaw[]
 })
 router.beforeEach((to, from, next) => {
-  const { isLogin } = toRaw(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  const { isLogin } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
   if (to.name != 'home' && to.name != 'login') {
     if (isLogin.value) {
       next()
@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-router.afterEach((to, from) => {
+router.afterEach((to: any, from) => {
   const { visitedRoutes } = storeToRefs(useCommonStore(pinia))
   const { handleAddVisitRoute } = useCommonStore(pinia)
   if (to.meta.showHeader) {
