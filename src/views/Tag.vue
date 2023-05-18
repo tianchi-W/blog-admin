@@ -127,6 +127,7 @@ const updateInfo = (val) => {
   formLabelAlign.type = type
   formLabelAlign._id = _id
 }
+
 const onSubmit = async () => {
   loading.value = true
   if (formLabelAlign.title) {

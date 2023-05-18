@@ -1,5 +1,7 @@
+import type { ApiResponse } from './data'
 import { httpGet, httpPost, httpDelete, httpPut } from './http'
-export const getArticleList = (params = {}) => httpGet({ url: '/article', params })
+export const getArticleList: (params: {}) => Promise<ApiResponse<any>> = (params = {}) =>
+  httpGet({ url: '/article', params })
 export const getArticleById = (data = {}) => httpPost({ url: '/article/info', data })
 export const addArticle = (data = {}) => httpPost({ url: '/article', data })
 export const delArticle = (data = {}) => httpDelete({ url: '/article', data })

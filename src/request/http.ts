@@ -1,10 +1,9 @@
-import axios from 'axios'
-
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import type { ApiResponse } from './data'
 import router from '@/router/index'
 import { storeToRefs } from 'pinia'
 import { useCommonStore } from '@/stores/common'
-import qs from 'qs'
-const service = axios.create({
+const service: AxiosInstance = axios.create({
   // @ts-ignore
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 30000 // 请求 30s 超时
@@ -24,7 +23,7 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    return console.error(error)
+    return Promise.reject(error)
   }
 )
 //   响应拦截器
@@ -61,7 +60,7 @@ service.interceptors.response.use(
 )
 // get 请求
 export function httpGet({ url, params = {} }: { url: string; params: any }) {
-  return new Promise((resolve, reject) => {
+  return new Promise<ApiResponse<any>>((resolve, reject) => {
     service
       .get(url, {
         params
@@ -76,7 +75,7 @@ export function httpGet({ url, params = {} }: { url: string; params: any }) {
 }
 
 // post请求
-export function httpPost({ url, data = {}, params = {} }) {
+export function httpPost({ url, data = {}, params = {} }: any) {
   return new Promise((resolve, reject) => {
     service({
       url,
