@@ -12,8 +12,6 @@
       default-active="2"
       text-color="#fff"
       :collapse="isCollapse"
-      @open="handleOpen"
-      @close="handleClose"
     >
       <menu-item :menuList="menuList"></menu-item>
     </el-menu>

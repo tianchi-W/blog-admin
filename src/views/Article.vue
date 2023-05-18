@@ -84,8 +84,9 @@
       style="margin-top: 20px"
       background
       v-model:current-page="currentPage"
+      :page-count="Math.ceil(total / pageSize)"
       layout="prev, pager, next"
-      :pageSize="pageSize"
+      :page-size="pageSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :total="total"
@@ -98,7 +99,7 @@ import { reactive, ref, watch, computed, onMounted } from 'vue'
 import formate from '@/utils/formate'
 import { getArticleList, delArticle } from '@/request/api'
 import { onBeforeRouteUpdate } from 'vue-router'
-import { Document, Menu as IconMenu, Location, Setting, House } from '@element-plus/icons-vue'
+
 enum OptionValeType {
   TIMEASC = 'ta',
   TIMEDESC = 'td',
