@@ -1,5 +1,5 @@
 <template>
-  <el-card v-if="$route.meta.showFator" class="box-card">
+  <el-card v-if="route.meta.showFator" class="box-card">
     <template #header>
       <div class="card-header">
         <span>文章管理</span>
@@ -22,7 +22,7 @@
     <el-button
       style="margin-bottom: 30px"
       type="primary"
-      @click="$router.push({ name: 'addArticle' })"
+      @click="router.push({ name: 'addArticle' })"
     >
       <el-icon style="margin-right: 10px">
         <document />
@@ -55,7 +55,7 @@
             type="primary"
             size="small"
             @click="
-              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'detail' } })
+              router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'detail' } })
             "
             >Detail</el-button
           >
@@ -64,7 +64,7 @@
             type="primary"
             size="small"
             @click="
-              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'edit' } })
+              router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'edit' } })
             "
             >Edit</el-button
           >
@@ -95,11 +95,13 @@
   <router-view></router-view>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, watch, computed, onMounted } from 'vue'
+import { ref } from 'vue'
 import formate from '@/utils/formate'
 import { getArticleList, delArticle } from '@/request/api'
 import { onBeforeRouteUpdate } from 'vue-router'
-
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 enum OptionValeType {
   TIMEASC = 'ta',
   TIMEDESC = 'td',

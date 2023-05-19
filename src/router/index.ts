@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecord, type RouteRecordRaw } from 'vue-router'
 import { useCommonStore } from '@/stores/common'
-import Index from '@/layouts/index.vue'
+import Common from '@/layouts/common.vue'
 import { routes } from '@/router/routes'
 import pinia from '@/stores/store'
 import { toRaw } from 'vue'
@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
-      component: Index,
+      component: Common,
       meta: { title: '首页' },
       redirect: '/',
       children: routes

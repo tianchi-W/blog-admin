@@ -6,7 +6,7 @@
         <el-header>
           <Header></Header>
         </el-header>
-        <VisitRoute />
+        <visit-route />
         <el-main>
           <RouterView> </RouterView>
         </el-main>
@@ -18,9 +18,8 @@
 import MyMenu from '@/components/MyMenu.vue'
 import Header from '@/components/Header.vue'
 import VisitRoute from '@/components/VisitRoute.vue'
-import { ref, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import { useCommonStore } from '@/stores/common'
-const Visit = ref<InstanceType<typeof VisitRoute> | null>(null)
 const { isCollapse } = toRefs(useCommonStore())
 </script>
 <style lang="scss" scoped>

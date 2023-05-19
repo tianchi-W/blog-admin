@@ -2,6 +2,6 @@
 
 <template>
   <main>
-    <MyCard></MyCard>
+    <my-card />
   </main>
 </template>

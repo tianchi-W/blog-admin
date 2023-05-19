@@ -58,6 +58,7 @@ const ruleForm = reactive({
   age: ''
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const rules = reactive<FormRules>({
   pass: [{ validator: validatePass, trigger: 'blur' }],
   checkPass: [{ validator: validatePass2, trigger: 'blur' }],
