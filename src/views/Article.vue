@@ -35,6 +35,11 @@
       <el-table-column prop="title" label="标题" width="180" />
       <el-table-column prop="content" label="内容" show-overflow-tooltip />
       <el-table-column prop="classifyname" label="分类" show-overflow-tooltip />
+      <el-table-column prop="pic" label="封面" width="180">
+        <template #default="scoped: any">
+          <img :src="scoped.row.pic" alt="" width="180" />
+        </template>
+      </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
         <template #default="scoped: any">
           <el-tag

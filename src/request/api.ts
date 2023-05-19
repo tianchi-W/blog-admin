@@ -27,3 +27,7 @@ export const getClassifyById = (data = {}) => httpPost({ url: '/Classify/info', 
 export const addClassify = (data = {}) => httpPost({ url: '/Classify', data })
 export const delClassify = (data = {}) => httpDelete({ url: '/Classify', data })
 export const upDateClassify = (data = {}) => httpPut({ url: '/Classify', data })
+
+//上传
+
+export const handleUpload = (data = {}) => httpPost({ url: '/upload/qiniu_upload', data })

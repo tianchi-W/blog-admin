@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     Header: typeof import('./components/Header.vue')['default']
     Menu: typeof import('./components/Menu.vue')['default']
     MenuItem: typeof import('./components/MenuItem.vue')['default']
@@ -46,6 +47,7 @@ declare module '@vue/runtime-core' {
     MyModel: typeof import('./components/common/MyModel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Upload: typeof import('./components/common/Upload.vue')['default']
     VisitRoute: typeof import('./components/VisitRoute.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -3,6 +3,7 @@ import type { ApiResponse } from './data'
 import router from '@/router/index'
 import { storeToRefs } from 'pinia'
 import { useCommonStore } from '@/stores/common'
+import { Buffer } from 'buffer'
 const service: AxiosInstance = axios.create({
   // @ts-ignore
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -30,6 +31,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   // @ts-ignore
   (response) => {
+    console.log(response, 'response')
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
     if (response.status === 200) {
@@ -141,5 +143,29 @@ export function httpPut({ url, data = {}, params = {} }) {
       console.log(res.data, 'data')
       resolve(res.data)
     })
+  })
+}
+
+/**
+ * 上传图片
+ */
+export function handleUpload(data) {
+  return new Promise(function (resolve, reject) {
+    console.log(data)
+    service({
+      url: '/upload/qiniu_upload',
+      method: 'POST',
+      data,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((res) => {
+        console.log(res, 'res')
+        resolve(res.data)
+      })
+      .then((err) => {
+        console.log(err, 'err')
+      })
   })
 }
