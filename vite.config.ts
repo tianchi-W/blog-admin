@@ -63,17 +63,17 @@ export default () => {
     server: {
       cors: true,
       open: true,
-      port: 8000
-      // proxy: {
-      //   '/api': {
-      //     target: 'http://localhost:50',
-      //     changeOrigin: true,
-      //     rewrite: (path) => {
-      //       console.log(path)
-      //       return path.replace(/\/api/, '')
-      //     } // 不可以省略rewrite
-      //   }
-      // }
+      port: 8000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:50',
+          changeOrigin: true,
+          rewrite: (path) => {
+            console.log(path)
+            return path.replace(/\/api/, '')
+          } // 不可以省略rewrite
+        }
+      }
     }
   })
 }

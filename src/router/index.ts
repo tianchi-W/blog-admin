@@ -3,12 +3,17 @@ import { useCommonStore } from '@/stores/common'
 import Common from '@/layouts/common.vue'
 import { routes } from '@/router/routes'
 import pinia from '@/stores/store'
-import { toRaw } from 'vue'
 import { storeToRefs } from 'pinia'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/blog',
+      name: 'forntend',
+      component: () => import('@/layouts/forntend.vue'),
+      meta: { title: '前台' }
+    },
     {
       path: '/',
       name: 'index',
@@ -16,6 +21,12 @@ const router = createRouter({
       meta: { title: '首页' },
       redirect: '/',
       children: routes
+    },
+    {
+      path: '/forntend',
+      name: 'forntend',
+      component: () => import('@/layouts/forntend.vue'),
+      meta: { title: '前台' }
     },
     {
       path: '/login',
@@ -33,8 +44,10 @@ const router = createRouter({
     }
   ] as RouteRecordRaw[]
 })
+//登录管理
 router.beforeEach((to, from, next) => {
   const { isLogin } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  //路由登录白名单
   if (to.name != 'home' && to.name != 'login') {
     if (isLogin.value) {
       next()
@@ -45,9 +58,13 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+// 判断是否是要展示面包屑的路由
+
 router.afterEach((to: any, from) => {
   const { visitedRoutes } = storeToRefs(useCommonStore(pinia))
   const { handleAddVisitRoute } = useCommonStore(pinia)
+
   if (to.meta.showHeader) {
     return
   }

@@ -14,8 +14,8 @@ export const useCommonStore = defineStore('common', {
     visitedRoutes: [] as { name: string; route?: RouteRecordRaw }[]
   }),
   actions: {
+    //面包屑导航
     handleAddVisitRoute: function (val: RouteRecordRaw) {
-      // console.log(val, 'val')
       this.visitedRoutes = [...this.visitedRoutes, { name: val.meta.title, route: val }]
     },
     handleRemoveVisitRoute: function (val: { name: string }[]) {
