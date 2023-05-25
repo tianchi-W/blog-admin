@@ -8,7 +8,9 @@
         </el-header>
         <visit-route />
         <el-main>
-          <RouterView> </RouterView>
+          <RouterView #default="{ Component }">
+            <component :is="Component"></component>
+          </RouterView>
         </el-main>
       </el-container>
     </el-container>

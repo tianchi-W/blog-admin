@@ -19,6 +19,7 @@
     "element-plus": "^2.3.4",
     "moment": "^2.29.4",
     "momentjs": "^2.0.0",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.32",
     "pinia-plugin-persist": "^1.0.0",
     "qs": "^6.11.2",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.14.2",
+    "@types/nprogress": "^0.2.0",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",

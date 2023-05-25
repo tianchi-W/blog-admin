@@ -25,7 +25,7 @@
       >
     </el-row>
     <el-form
-      :label-position="labelPosition"
+      label-position="right"
       label-width="100px"
       :model="formLabelAlign"
       style="max-width: 460px; margin-top: 30px"
@@ -65,7 +65,7 @@
     type,
     status, */
 import { onBeforeMount, onMounted, reactive, ref, computed } from 'vue'
-import { getTagById, addTag, delTag, upDateTag, getTagList } from '@/request/api'
+import { addTag, delTag, upDateTag, getTagList } from '@/request/api'
 const loading = ref(false)
 const options = [
   {
@@ -86,7 +86,7 @@ const options = [
   }
 ]
 const isStatus = ref('add')
-const labelPosition = ref('right')
+
 const formLabelAlign = reactive<{
   title: string
   introduction: string
@@ -141,7 +141,7 @@ const onSubmit = async () => {
         })
       }
       loading.value = false
-    } else if ((isStatus.value = 'edit')) {
+    } else if (isStatus.value === 'edit') {
       await upDateTag(formLabelAlign)
       loading.value = false
     }

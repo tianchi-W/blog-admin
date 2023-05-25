@@ -3,25 +3,39 @@
 */
 export const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
-    meta: { title: '首页', showHeader: true, icon: 'House' },
+    meta: { title: '首页', showHeader: true, icon: 'House', permission: ['home'] },
     component: () => import('@/views/HomeView.vue')
   },
   {
     path: '/users',
     name: 'users',
-    meta: {
-      title: '用户管理',
-      icon: 'User'
-    },
-    component: () => import('@/views/UsersView.vue'),
+
+    meta: { title: '用户管理', icon: 'User', permission: ['users'] },
+    redirect: '/users/roles',
     children: [
       {
-        path: '/users/route',
-        name: 'route',
-        component: () => import('@/views/AddArticle.vue'),
-        meta: { title: '路由管理', icon: 'Guide' }
+        path: '/users/usersList',
+        name: 'usersList',
+        component: () => import('@/views/user/UsersView.vue'),
+        meta: {
+          title: '用户管理',
+          icon: 'User',
+          permission: ['users']
+        }
+      },
+      {
+        path: '/users/roles',
+        name: 'roles',
+        component: () => import('@/views/user/UsersRoles.vue'),
+        meta: { title: '角色管理', icon: 'Guide', permission: ['route'] }
+      },
+      {
+        path: '/users/permission',
+        name: 'permission',
+        component: () => import('@/views/user/UsersPermission.vue'),
+        meta: { title: '权限管理', icon: 'Guide', permission: ['permission'] }
       }
     ]
   },
@@ -31,15 +45,21 @@ export const routes = [
     meta: {
       title: '文章管理',
       showFator: true,
-      icon: 'Document'
+      icon: 'Document',
+      permission: ['article']
     },
-    component: () => import('@/views/Article.vue'),
+    component: () => import('@/views/article/ArticleList.vue'),
     children: [
       {
         path: '/article/add',
         name: 'addArticle',
-        component: () => import('@/views/AddArticle.vue'),
-        meta: { showFator: false, title: '新增文章', icon: 'DocumentAdd' }
+        component: () => import('@/views/article/AddArticle.vue'),
+        meta: {
+          showFator: false,
+          title: '新增文章',
+          icon: 'DocumentAdd',
+          permission: ['addArticle']
+        }
       }
     ]
   },
@@ -48,9 +68,10 @@ export const routes = [
     name: 'tag',
     meta: {
       title: '标签管理',
-      icon: 'PriceTag'
+      icon: 'PriceTag',
+      permission: ['tag']
     },
-    component: () => import('@/views/Tag.vue')
+    component: () => import('@/views/ArticleTag.vue')
   },
 
   {
@@ -58,6 +79,7 @@ export const routes = [
     name: 'classify',
     meta: {
       title: '分类管理',
+      permission: ['classify'],
       icon: 'View'
     },
     component: () => import('@/views/Classify.vue')
@@ -67,8 +89,9 @@ export const routes = [
     name: 'setting',
     meta: {
       title: '设置',
-      icon: 'Setting'
+      icon: 'Setting',
+      permission: ['setting']
     },
-    component: () => import('@/views/Setting.vue')
+    component: () => import('@/views/ManageSetting.vue')
   }
 ]

@@ -1,0 +1,18 @@
+<template>
+  <el-card class="box-card">
+    <template #header>
+      <div class="card-header">
+        <span>角色管理</span>
+      </div></template
+    ></el-card
+  >
+</template>
+<script lang="ts" setup>
+import { onBeforeMount, onMounted, reactive } from 'vue'
+const emits = defineEmits([])
+const state = reactive({})
+onBeforeMount(() => {})
+onMounted(() => {})
+defineExpose({ state })
+</script>
+<style lang="scss" scoped></style>
