@@ -1,5 +1,5 @@
 <template>
-  <el-card v-if="route.meta.showFator" class="box-card">
+  <el-card v-if="route.name == 'article'" class="box-card">
     <template #header>
       <div class="card-header">
         <span>文章管理</span>

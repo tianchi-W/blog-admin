@@ -29,7 +29,6 @@ export const delClassify = (data = {}) => httpDelete({ url: '/Classify', data })
 export const upDateClassify = (data = {}) => httpPut({ url: '/Classify', data })
 
 //上传
-
 export const handleUpload = (data = {}) => httpPost({ url: '/upload/qiniu_upload', data })
 
 //权限管理
@@ -41,3 +40,5 @@ export const getPidByType = (params = {}) => httpGet({ url: '/permission/getpidb
 //角色管理
 export const addRoles = (data = {}) => httpPost({ url: '/roles/add', data })
 export const getRolesList = (data = {}) => httpPost({ url: '/roles', data })
+
+export const getRoleById = (data = {}) => httpPost({ url: '/roles/info', data })

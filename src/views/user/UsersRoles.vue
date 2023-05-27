@@ -14,9 +14,11 @@
           <el-table-column prop="permissionNames" label="permissionName" />
 
           <el-table-column fixed="right" label="Operations" width="100">
-            <template #default>
-              <el-button link type="primary" size="small">Detail</el-button>
-              <el-button link type="primary" size="small">Edit</el-button>
+            <template #default="{ row }">
+              <el-button link type="primary" @click="handleDetail(row)" size="small"
+                >Detail</el-button
+              >
+              <el-button link type="primary" @click="handleEdit(row)" size="small">Edit</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -63,23 +65,27 @@ const getPerimission = async () => {
   await getPermission()
 }
 const onSubmit = async () => {
-  await addRoles(form.value)
+  await addRoles({ name: form.value.name, permissionNames: form.value.permissionNames })
   await getData()
   form.value = {
     name: '',
-    permission: [],
     permissionNames: []
   }
 }
 const form = ref({
   name: '',
-  permission: [],
   permissionNames: []
 })
 const rolesList = computed(() => {
   return list.value.role
 })
 await getData()
+const handleDetail = (row) => {
+  console.log(row, 'row')
+}
+const handleEdit = (row) => {
+  form.value = row
+}
 </script>
 <style lang="scss" scoped>
 .el-row {

@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { toRaw } from '@vue/reactivity'
+import { toRaw } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useCommonStore } from '@/stores/common'
 import { reactive, ref } from 'vue'

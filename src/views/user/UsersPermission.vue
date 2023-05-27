@@ -9,6 +9,7 @@
 
     <el-table :data="permission" style="width: 100%">
       <el-table-column fixed prop="name" label="name" width="200" />
+      <el-table-column fixed prop="component" label="component" width="200" />
       <el-table-column prop="path" label="path" width="200" />
       <el-table-column prop="pid" label="父级是谁" width="200">
         <template #default="{ row }">
@@ -17,9 +18,9 @@
       </el-table-column>
       <el-table-column prop="type" label="几级菜单" width="200" />
       <el-table-column fixed="right" label="Operations" width="200">
-        <template #default>
-          <el-button link type="primary" size="small" @click="handleClick">Detail</el-button>
-          <el-button link type="primary" size="small">Edit</el-button>
+        <template #default="{ row }">
+          <el-button link type="primary" size="small" @click="handleDetail(row)">Detail</el-button>
+          <el-button link type="primary" @click="handleEdit(row)" size="small">Edit</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,6 +50,9 @@
         <el-form-item label="菜单路径">
           <el-input v-model="form.path" />
         </el-form-item>
+        <el-form-item label="组件路径">
+          <el-input v-model="form.component" />
+        </el-form-item>
         <el-form-item label="菜单icon">
           <el-input v-model="form.icon" />
         </el-form-item>
@@ -74,13 +78,13 @@ const permission = computed(() => {
   return list.value.permission
 })
 
-const handleClick = () => {}
 let form = ref({
   name: '',
   type: 1,
   icon: '',
   pid: '',
-  path: ''
+  path: '',
+  component: ''
 })
 const getPid = ref()
 const getPidList = async () => {
@@ -97,8 +101,16 @@ const onSubmit = async () => {
     type: 1,
     icon: '',
     pid: '',
-    path: ''
+    path: '',
+    component: ''
   }
+}
+const handleDetail = (row) => {
+  console.log(row, 'row')
+}
+const handleEdit = (row) => {
+  form.value = row
+  dialogVisible.value = true
 }
 </script>
 <style lang="scss" scoped>

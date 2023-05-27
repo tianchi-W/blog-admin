@@ -1,10 +1,10 @@
 import { ref } from 'vue'
 
-export const UseGetList = ({ api }) => {
+export const UseGetList = ({ api, params = {} }) => {
   const list = ref()
 
   const getData = async () => {
-    const res = await api()
+    const res = await api(params)
     if (res.code === 200) {
       list.value = res.data
       ElMessage({

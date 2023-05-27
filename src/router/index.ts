@@ -6,6 +6,10 @@ import { storeToRefs } from 'pinia'
 import { routes } from '@/router/routes'
 import { getRoute } from '@/router/service'
 import { close, start } from '@/utils/nprogress'
+// import UsersPermission from '@/views/user/UsersPermission.vue'
+// import UsersRoles from '@/views/user/UsersRoles.vue'
+// import ArticleList from '@/views/article/ArticleList.vue'
+// import ManageSetting from '@/views/ManageSetting.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,7 +36,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/Login.vue')
+      component: () => import('@/views/UserLogin.vue')
     },
 
     {
@@ -54,10 +58,19 @@ const routeList = getRoute()
 console.log(routeList)
 router.beforeEach((to, from, next) => {
   start()
-  const { isLogin } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  const { isLogin, menuList } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  if (from.name == 'login') {
+    const { handleRole } = useCommonStore(pinia)
+    handleRole()
+  }
+  console.log(menuList, 'fkdl')
   //路由登录白名单
   if (to.name != 'home' && to.name != 'login') {
     if (isLogin.value) {
+      console.log(routes, menuList)
+      // if (!isAddRoute) {
+      //   router.addRoute('index', {path:'/article',name:'article',meta:{title:'dslkdls'},component:ArticleListVue}}
+      // }
       // if (!isAddRoute) {
       //   routeList.forEach((route) => {
       //     router.addRoute('index', route)

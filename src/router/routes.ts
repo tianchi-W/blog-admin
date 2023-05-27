@@ -9,11 +9,11 @@ export const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
-    path: '/users',
+    path: '/users/usersList',
     name: 'users',
 
     meta: { title: '用户管理', icon: 'User', permission: ['users'] },
-    redirect: '/users/roles',
+    // redirect: '/users/usersList',
     children: [
       {
         path: '/users/usersList',
@@ -44,7 +44,7 @@ export const routes = [
     name: 'article',
     meta: {
       title: '文章管理',
-      showFator: true,
+
       icon: 'Document',
       permission: ['article']
     },
@@ -55,7 +55,6 @@ export const routes = [
         name: 'addArticle',
         component: () => import('@/views/article/AddArticle.vue'),
         meta: {
-          showFator: false,
           title: '新增文章',
           icon: 'DocumentAdd',
           permission: ['addArticle']
