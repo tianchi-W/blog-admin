@@ -22,15 +22,16 @@ declare module '@vue/runtime-core' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTag: typeof import('element-plus/es')['ElTag']
     Header: typeof import('./src/components/Header.vue')['default']
-    Menu: typeof import('./src/components/Menu.vue')['default']
     MenuItem: typeof import('./src/components/MenuItem.vue')['default']
     MyCard: typeof import('./src/components/common/MyCard.vue')['default']
     MyMenu: typeof import('./src/components/MyMenu.vue')['default']
     MyModel: typeof import('./src/components/common/MyModel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Upload: typeof import('./src/components/common/Upload.vue')['default']
     VisitRoute: typeof import('./src/components/VisitRoute.vue')['default']
   }
 }

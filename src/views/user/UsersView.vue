@@ -5,7 +5,7 @@
         <span>用户管理</span>
       </div>
     </template>
-    <el-table :data="getDateInfo" style="width: 100%" height="700">
+    <el-table :data="getDate" style="width: 100%" height="700">
       <el-table-column fixed prop="username" label="姓名" width="150" />
       <el-table-column prop="createTime" label="日期" width="120" />
       <el-table-column prop="isWx" label="微信用户" width="120">
@@ -31,7 +31,7 @@
         <template #default="scoped: any">
           <el-popconfirm title="Are you sure to delete this?">
             <template #reference>
-              <el-button type="danger" disabled>删除</el-button>
+              <el-button type="danger" disabled @click="console.log(scoped)">删除</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -43,24 +43,8 @@
 
 <script setup lang="ts">
 import { getUserInfoList } from '@/request/api'
-import { ref, computed } from 'vue'
-const getDate = ref()
-const getDateInfo = computed(() => {
-  return getDate.value.data
-})
-const getUserInfo = async () => {
-  getDate.value = await getUserInfoList()
-}
-await getUserInfo()
-console.log(getDate.value)
+import { ref } from 'vue'
+const getDate = ref((await getUserInfoList()).data)
 </script>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style></style>

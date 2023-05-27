@@ -1,5 +1,5 @@
 <template>
-  <el-card v-if="$route.meta.showFator" class="box-card">
+  <el-card v-if="route.name == 'article'" class="box-card">
     <template #header>
       <div class="card-header">
         <span>文章管理</span>
@@ -22,18 +22,36 @@
     <el-button
       style="margin-bottom: 30px"
       type="primary"
-      @click="$router.push({ name: 'addArticle' })"
+      @click="router.push({ name: 'addArticle' })"
     >
       <el-icon style="margin-right: 10px">
         <document />
       </el-icon>
       新增文章</el-button
     >
-    <el-table :data="articleList" height="600" style="width: 100%">
+    <el-table :data="articleList" height="560" style="width: 100%">
       <el-table-column fixed prop="date" label="Date" width="150" />
-      <el-table-column prop="username" label="作者" width="150" />
+      <el-table-column prop="author" label="作者" width="150" />
       <el-table-column prop="title" label="标题" width="180" />
       <el-table-column prop="content" label="内容" show-overflow-tooltip />
+      <el-table-column prop="classifyname" label="分类" show-overflow-tooltip />
+      <el-table-column prop="pic" label="封面" width="180">
+        <template #default="scoped: any">
+          <img :src="scoped.row.pic" alt="" width="180" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="tags" label="标签" width="200">
+        <template #default="scoped: any">
+          <el-tag
+            style="margin: 1px 5px; cursor: pointer"
+            :type="item.type"
+            v-for="item in scoped.row.tags"
+            :key="item._id"
+            class="large"
+            >{{ item.title }}</el-tag
+          >
+        </template>
+      </el-table-column>
       <el-table-column prop="introduction" label="简介" width="180" />
       <el-table-column fixed="right" label="Operations" width="200">
         <template #default="scoped: any">
@@ -42,7 +60,7 @@
             type="primary"
             size="small"
             @click="
-              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'detail' } })
+              router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'detail' } })
             "
             >Detail</el-button
           >
@@ -51,7 +69,7 @@
             type="primary"
             size="small"
             @click="
-              $router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'edit' } })
+              router.push({ name: 'addArticle', query: { id: scoped.row._id, type: 'edit' } })
             "
             >Edit</el-button
           >
@@ -71,9 +89,9 @@
       style="margin-top: 20px"
       background
       v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
+      :page-count="Math.ceil(total / pageSize)"
       layout="prev, pager, next"
-      :page-size="3"
+      :page-size="pageSize"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :total="total"
@@ -82,11 +100,13 @@
   <router-view></router-view>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, watch, computed, onMounted } from 'vue'
+import { ref } from 'vue'
 import formate from '@/utils/formate'
 import { getArticleList, delArticle } from '@/request/api'
 import { onBeforeRouteUpdate } from 'vue-router'
-import { Document, Menu as IconMenu, Location, Setting, House } from '@element-plus/icons-vue'
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+const route = useRoute()
 enum OptionValeType {
   TIMEASC = 'ta',
   TIMEDESC = 'td',

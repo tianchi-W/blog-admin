@@ -42,23 +42,24 @@
 </template>
 
 <script lang="ts" setup>
-import { toRaw } from '@vue/reactivity'
+import { toRaw } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useCommonStore } from '@/stores/common'
 import { reactive, ref } from 'vue'
 import { getVerityCode } from '@/request/api'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 const router = useRouter()
 
 const verityCode = ref('')
 const codeSvg = ref(await getVerityCode())
 const handleVerityCode = async () => {
-  console.log(codeSvg)
   codeSvg.value = await getVerityCode()
 }
 const ruleFormRef = ref<FormInstance>()
 
-const { handleLogin, isLogin } = toRaw(useCommonStore())
+const { isLogin } = storeToRefs(useCommonStore())
+const { handleLogin } = useCommonStore()
 
 const validatePass = (rule: any, value: any, callback: any) => {
   if (value === '') {
@@ -102,7 +103,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
       // console.log(toRaw(ruleForm), 'submit!')
 
       await handleLogin(toRaw(ruleForm))
-      console.log(isLogin.value, 'isLogin')
       isLogin.value && router.push({ name: 'home' })
 
       ruleForm.password = ''

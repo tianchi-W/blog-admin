@@ -1,10 +1,10 @@
-import axios from 'axios'
-
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import type { ApiResponse } from './data'
 import router from '@/router/index'
 import { storeToRefs } from 'pinia'
 import { useCommonStore } from '@/stores/common'
-
-const service = axios.create({
+import { Buffer } from 'buffer'
+const service: AxiosInstance = axios.create({
   // @ts-ignore
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 30000 // 请求 30s 超时
@@ -17,22 +17,22 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     const { token } = storeToRefs(useCommonStore())
-    console.log(config)
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
     // 每次发送请求之前判断是否存在token
     // 如果存在，则统一在http请求的header都加上token，这样后台根据token判断你的登录情况，此处token一般是用户完成登录后储存到localstorage里的
     token.value && (config.headers.Authorization = 'bearer ' + token.value)
     return config
   },
   (error) => {
-    return Promise.error(error)
+    return Promise.reject(error)
   }
 )
 //   响应拦截器
 service.interceptors.response.use(
   // @ts-ignore
   (response) => {
+    console.log(response, 'response')
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
-    console.log(response)
     // 否则的话抛出错误
     if (response.status === 200) {
       if (response.data.code !== 200) {
@@ -62,7 +62,7 @@ service.interceptors.response.use(
 )
 // get 请求
 export function httpGet({ url, params = {} }: { url: string; params: any }) {
-  return new Promise((resolve, reject) => {
+  return new Promise<ApiResponse<any>>((resolve, reject) => {
     service
       .get(url, {
         params
@@ -76,13 +76,13 @@ export function httpGet({ url, params = {} }: { url: string; params: any }) {
   })
 }
 
-// post
 // post请求
-export function httpPost({ url, data = {}, params = {} }) {
+export function httpPost({ url, data = {}, params = {} }: any) {
   return new Promise((resolve, reject) => {
     service({
       url,
       method: 'post',
+
       transformRequest: [
         function (data) {
           let ret = ''
@@ -140,7 +140,32 @@ export function httpPut({ url, data = {}, params = {} }) {
       // url参数
       params
     }).then((res) => {
+      console.log(res.data, 'data')
       resolve(res.data)
     })
+  })
+}
+
+/**
+ * 上传图片
+ */
+export function handleUpload(data) {
+  return new Promise(function (resolve, reject) {
+    console.log(data)
+    service({
+      url: '/upload/qiniu_upload',
+      method: 'POST',
+      data,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((res) => {
+        console.log(res, 'res')
+        resolve(res.data)
+      })
+      .then((err) => {
+        console.log(err, 'err')
+      })
   })
 }

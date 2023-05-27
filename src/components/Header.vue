@@ -36,7 +36,7 @@ import { ref } from 'vue'
 import { useCommonStore } from '@/stores/common'
 import { ArrowRight } from '@element-plus/icons-vue'
 import router from '@/router/index'
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 const pathList = ref(useRoute().matched)
 onBeforeRouteUpdate((to, from) => {
   pathList.value = to.matched
@@ -45,7 +45,6 @@ import { storeToRefs } from 'pinia'
 const { loginOut, handleIsCollapse } = useCommonStore()
 const { isLogin, userName, avatar } = storeToRefs(useCommonStore())
 const login = () => {
-  console.log('fkdl')
   isLogin.value ? loginOut() : router.push({ name: 'login' })
 }
 </script>

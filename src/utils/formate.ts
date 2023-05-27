@@ -56,7 +56,7 @@ moment.locale('zh-cn', {
     sameElse: 'L'
   },
   dayOfMonthOrdinalParse: /\d{1,2}(日|月|周)/,
-  ordinal: function (number: string, period: string): string | any {
+  ordinal: function (number: string, period: any): string | any {
     switch (period) {
       case 'd':
       case 'D':

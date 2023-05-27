@@ -3,7 +3,7 @@
 <template>
   <Suspense>
     <router-view>
-      <template #default="{ Component, route }">
+      <template #default="{ Component }">
         <component :is="Component"></component>
       </template>
     </router-view>

@@ -1,27 +1,44 @@
 import { createRouter, createWebHistory, type RouteRecord, type RouteRecordRaw } from 'vue-router'
 import { useCommonStore } from '@/stores/common'
-import Index from '@/layouts/index.vue'
-import { routes } from '@/router/routes'
+import Common from '@/layouts/common.vue'
 import pinia from '@/stores/store'
-import { toRaw } from 'vue'
 import { storeToRefs } from 'pinia'
-
+import { routes } from '@/router/routes'
+import { getRoute } from '@/router/service'
+import { close, start } from '@/utils/nprogress'
+// import UsersPermission from '@/views/user/UsersPermission.vue'
+// import UsersRoles from '@/views/user/UsersRoles.vue'
+// import ArticleList from '@/views/article/ArticleList.vue'
+// import ManageSetting from '@/views/ManageSetting.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/blog',
+      name: 'forntend',
+      component: () => import('@/layouts/forntend.vue'),
+      meta: { title: '前台' }
+    },
+    {
       path: '/',
       name: 'index',
-      component: Index,
+      redirect: '/home',
+      component: Common,
       meta: { title: '首页' },
-      redirect: '/',
       children: routes
+    },
+    {
+      path: '/forntend',
+      name: 'forntend',
+      component: () => import('@/layouts/forntend.vue'),
+      meta: { title: '前台' }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/login.vue')
+      component: () => import('@/views/UserLogin.vue')
     },
+
     {
       path: '/404',
       name: 'NotFound',
@@ -29,14 +46,46 @@ const router = createRouter({
     },
     {
       path: '/:pathMatch(.*)',
-      redirect: '/404'
+      redirect: '/404',
+      name: 'Not'
     }
   ] as RouteRecordRaw[]
 })
+//登录管理
+
+let isAddRoute = false
+const routeList = getRoute()
+console.log(routeList)
 router.beforeEach((to, from, next) => {
-  const { isLogin } = toRaw(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  start()
+  const { isLogin, menuList } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
+  if (from.name == 'login') {
+    const { handleRole } = useCommonStore(pinia)
+    handleRole()
+  }
+  console.log(menuList, 'fkdl')
+  //路由登录白名单
   if (to.name != 'home' && to.name != 'login') {
     if (isLogin.value) {
+      // console.log(routes, menuList)
+      // if (!isAddRoute) {
+      //   router.addRoute('index', menuList[0])
+      //   console.log(router, 'rrrrr')
+      // }
+      // if (!isAddRoute) {
+      //   routeList.forEach((route) => {
+      //     router.addRoute('index', route)
+      //   })
+      //   router.addRoute({
+      //     path: '/:pathMatch(.*)',
+      //     redirect: '/404',
+      //     name: 'Not'
+      //   })
+      //   isAddRoute = true
+      //   next()
+      // } else {
+      //   next()
+      // }
       next()
     } else {
       next({ name: 'login' })
@@ -45,9 +94,14 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-router.afterEach((to, from) => {
+
+// 判断是否是要展示面包屑的路由
+
+router.afterEach((to: any, from) => {
+  close()
   const { visitedRoutes } = storeToRefs(useCommonStore(pinia))
   const { handleAddVisitRoute } = useCommonStore(pinia)
+
   if (to.meta.showHeader) {
     return
   }

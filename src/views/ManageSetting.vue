@@ -5,6 +5,7 @@
         <span>Card name</span>
       </div>
     </template>
+    123
   </el-card>
 </template>
 <script lang="ts" setup>

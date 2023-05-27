@@ -1,6 +1,6 @@
 <template>
-  <div class="err404">
-    <h4>您访问的页面不见了！</h4>
+  <div>
+    <h4 class="err404"></h4>
 
     <h5><router-link :to="{ name: 'index' }" class="go-home">去首页</router-link></h5>
   </div>
@@ -22,13 +22,13 @@ defineExpose({ state })
   background: url(../../static/404_bg.png) no-repeat 0 0;
 }
 
-.err404 h4 {
+h4 {
   font-size: 24px;
   color: #191919;
   padding-bottom: 16px;
 }
 
-.err404 .go-home {
+.go-home {
   width: 130px;
   height: 38px;
   background: #c9141d;
@@ -38,5 +38,9 @@ defineExpose({ state })
   text-align: center;
   display: inline-block;
   border-radius: 2px;
+}
+h5 {
+  display: flex;
+  justify-content: center;
 }
 </style>

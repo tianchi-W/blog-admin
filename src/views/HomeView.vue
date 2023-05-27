@@ -1,9 +1,7 @@
-<script setup lang="ts">
-import MyCard from '@/components/common/MyCard.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main>
-    <MyCard></MyCard>
+    <my-card />
   </main>
 </template>

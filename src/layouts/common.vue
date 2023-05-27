@@ -6,9 +6,11 @@
         <el-header>
           <Header></Header>
         </el-header>
-        <VisitRoute />
+        <visit-route />
         <el-main>
-          <RouterView> </RouterView>
+          <RouterView #default="{ Component }">
+            <component :is="Component"></component>
+          </RouterView>
         </el-main>
       </el-container>
     </el-container>
@@ -18,9 +20,8 @@
 import MyMenu from '@/components/MyMenu.vue'
 import Header from '@/components/Header.vue'
 import VisitRoute from '@/components/VisitRoute.vue'
-import { ref, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import { useCommonStore } from '@/stores/common'
-
 const { isCollapse } = toRefs(useCommonStore())
 </script>
 <style lang="scss" scoped>
