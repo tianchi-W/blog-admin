@@ -31,3 +31,13 @@ export const upDateClassify = (data = {}) => httpPut({ url: '/Classify', data })
 //上传
 
 export const handleUpload = (data = {}) => httpPost({ url: '/upload/qiniu_upload', data })
+
+//权限管理
+export const addPermission = (data = {}) => httpPost({ url: '/permission/add', data })
+export const getPermissionList = (data = {}) => httpPost({ url: '/permission', data })
+
+export const getPidByType = (params = {}) => httpGet({ url: '/permission/getpidbytype', params })
+
+//角色管理
+export const addRoles = (data = {}) => httpPost({ url: '/roles/add', data })
+export const getRolesList = (data = {}) => httpPost({ url: '/roles', data })

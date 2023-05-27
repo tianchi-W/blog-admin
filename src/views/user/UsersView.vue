@@ -28,10 +28,10 @@
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="Operations" width="200">
-        <template>
+        <template #default="scoped: any">
           <el-popconfirm title="Are you sure to delete this?">
             <template #reference>
-              <el-button type="danger" disabled>删除</el-button>
+              <el-button type="danger" disabled @click="console.log(scoped)">删除</el-button>
             </template>
           </el-popconfirm>
         </template>
