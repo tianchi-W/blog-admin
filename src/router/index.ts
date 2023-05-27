@@ -67,9 +67,10 @@ router.beforeEach((to, from, next) => {
   //路由登录白名单
   if (to.name != 'home' && to.name != 'login') {
     if (isLogin.value) {
-      console.log(routes, menuList)
+      // console.log(routes, menuList)
       // if (!isAddRoute) {
-      //   router.addRoute('index', {path:'/article',name:'article',meta:{title:'dslkdls'},component:ArticleListVue}}
+      //   router.addRoute('index', menuList[0])
+      //   console.log(router, 'rrrrr')
       // }
       // if (!isAddRoute) {
       //   routeList.forEach((route) => {

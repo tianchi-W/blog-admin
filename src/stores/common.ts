@@ -3,13 +3,9 @@ import { login, getRoleById } from '@/request/api'
 import storage from '@/utils/localstorage.js'
 import { UseGetList } from '@/utils/hooks'
 
-const modules = import.meta.glob('/**/*.vue')
-
-const _import = (file: String) => () => import(`@/views/${file}.vue`)
-
 import type { RouteRecordRaw } from 'vue-router'
 import { routes } from '@/router/routes'
-// import arrayToTree from '@/utils/arrayTree'
+
 export const useCommonStore = defineStore('common', {
   state: () => ({
     token: '',
@@ -36,20 +32,14 @@ export const useCommonStore = defineStore('common', {
       // } else {
       //     router.component = modules[`../../views/${router.component}.vue`]
       // }
+      const modules = import.meta.glob('../views/**/*.vue')
       const arrayToTree = (items) => {
         let res = []
         let getChildren = (res, pid) => {
           for (const i of items) {
             if (i.pid == pid) {
               const newItem = { ...i, children: [] }
-              res.push({
-                path: newItem.path,
-                name: newItem.name,
-                meta: { icon: newItem.icon, title: newItem.name },
-                // newItem.component.split('/').slice(-1)[0].split('.')[0]
-                component: _import('ArticleList'),
-                children: []
-              })
+              newItem.path && res.push(newItem)
 
               getChildren(newItem.children, newItem.name)
             }

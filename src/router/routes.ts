@@ -9,11 +9,11 @@ export const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
-    path: '/users/usersList',
+    path: '/users',
     name: 'users',
 
     meta: { title: '用户管理', icon: 'User', permission: ['users'] },
-    // redirect: '/users/usersList',
+    redirect: '/users/usersList',
     children: [
       {
         path: '/users/usersList',

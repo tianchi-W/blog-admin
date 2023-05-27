@@ -12,7 +12,7 @@
     @close="handleClose"
     style="height: 100%"
   >
-    <menu-item :menu-list="routes"> </menu-item>
+    <menu-item :menu-list="menuList"> </menu-item>
   </el-menu>
 </template>
 

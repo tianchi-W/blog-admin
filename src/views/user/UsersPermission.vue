@@ -9,8 +9,10 @@
 
     <el-table :data="permission" style="width: 100%">
       <el-table-column fixed prop="name" label="name" width="200" />
-      <el-table-column fixed prop="component" label="component" width="200" />
+      <el-table-column prop="component" label="component" width="200" />
       <el-table-column prop="path" label="path" width="200" />
+      <el-table-column prop="title" label="title" width="200" />
+      <el-table-column prop="redirect" label="redirect" width="200" />
       <el-table-column prop="pid" label="父级是谁" width="200">
         <template #default="{ row }">
           {{ row.pid == -1 ? '没有父级' : row.pid }}
@@ -30,6 +32,7 @@
         <el-form-item label="权限名">
           <el-input v-model="form.name" />
         </el-form-item>
+
         <el-form-item label="菜单级别">
           <el-select v-model="form.type" placeholder="选择菜单级别">
             <el-option label="一级菜单" :value="1" />
@@ -49,6 +52,12 @@
         </el-form-item>
         <el-form-item label="菜单路径">
           <el-input v-model="form.path" />
+        </el-form-item>
+        <el-form-item label="菜单名">
+          <el-input v-model="form.title" />
+        </el-form-item>
+        <el-form-item label="重定向">
+          <el-input v-model="form.redirect" />
         </el-form-item>
         <el-form-item label="组件路径">
           <el-input v-model="form.component" />
@@ -84,7 +93,9 @@ let form = ref({
   icon: '',
   pid: '',
   path: '',
-  component: ''
+  component: '',
+  title: '',
+  redirect: ''
 })
 const getPid = ref()
 const getPidList = async () => {
@@ -102,7 +113,9 @@ const onSubmit = async () => {
     icon: '',
     pid: '',
     path: '',
-    component: ''
+    component: '',
+    title: '',
+    redirect: ''
   }
 }
 const handleDetail = (row) => {
