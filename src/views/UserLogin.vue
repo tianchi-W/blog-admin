@@ -103,7 +103,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
       // console.log(toRaw(ruleForm), 'submit!')
 
       await handleLogin(toRaw(ruleForm))
-      isLogin.value && router.push({ name: 'home' })
+
+      isLogin.value && router.push({ path: '/' })
 
       ruleForm.password = ''
       ruleForm.username = ''

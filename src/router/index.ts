@@ -3,8 +3,6 @@ import { useCommonStore } from '@/stores/common'
 import Common from '@/layouts/common.vue'
 import pinia from '@/stores/store'
 import { storeToRefs } from 'pinia'
-import { routes } from '@/router/routes'
-import { getRoute } from '@/router/service'
 import { close, start } from '@/utils/nprogress'
 // import UsersPermission from '@/views/user/UsersPermission.vue'
 // import UsersRoles from '@/views/user/UsersRoles.vue'
@@ -19,13 +17,20 @@ const router = createRouter({
       component: () => import('@/layouts/forntend.vue'),
       meta: { title: '前台' }
     },
+
     {
       path: '/',
       name: 'index',
       redirect: '/home',
       component: Common,
       meta: { title: '首页' },
-      children: routes
+      children: [
+        {
+          path: '/home',
+          meta: { title: '首页', icon: 'House' },
+          component: () => import('@/views/HomeView.vue')
+        }
+      ]
     },
     {
       path: '/forntend',
@@ -43,56 +48,46 @@ const router = createRouter({
       path: '/404',
       name: 'NotFound',
       component: () => import('@/views/NotFound.vue')
-    },
-    {
-      path: '/:pathMatch(.*)',
-      redirect: '/404',
-      name: 'Not'
     }
   ] as RouteRecordRaw[]
 })
 //登录管理
 
 let isAddRoute = false
-const routeList = getRoute()
-console.log(routeList)
 router.beforeEach((to, from, next) => {
   start()
+  console.log('addaddqqq')
   const { isLogin, menuList } = storeToRefs(useCommonStore(pinia)) // 这里一定要把 pinia传入进去 持久化储存必须放在路由狗子里
-  if (from.name == 'login') {
-    const { handleRole } = useCommonStore(pinia)
-    handleRole()
+  if (!isAddRoute && isLogin.value) {
+    console.log('addadd')
+    menuList.value.forEach((element) => {
+      router.addRoute('index', element)
+    })
+    console.log('addaddccc')
+    router.addRoute('index', menuList.value[0])
+    next({ ...to, replace: true })
+    isAddRoute = true
+    router.addRoute({
+      path: '/:pathMatch(.*)',
+      redirect: '/404',
+      name: 'Not'
+    })
+    console.log('addadd')
   }
-  console.log(menuList, 'fkdl')
+  next()
+  // next()
   //路由登录白名单
-  if (to.name != 'home' && to.name != 'login') {
+  if (to.path == '/home') {
+    console.log('isAdd')
+    !isLogin.value && next({ path: '/login' })
     if (isLogin.value) {
-      // console.log(routes, menuList)
-      // if (!isAddRoute) {
-      //   router.addRoute('index', menuList[0])
-      //   console.log(router, 'rrrrr')
-      // }
-      // if (!isAddRoute) {
-      //   routeList.forEach((route) => {
-      //     router.addRoute('index', route)
-      //   })
-      //   router.addRoute({
-      //     path: '/:pathMatch(.*)',
-      //     redirect: '/404',
-      //     name: 'Not'
-      //   })
-      //   isAddRoute = true
-      //   next()
-      // } else {
-      //   next()
-      // }
+      console.log('isAdd')
+
+      console.log('isAdd')
       next()
-    } else {
-      next({ name: 'login' })
     }
-  } else {
-    next()
   }
+  next()
 })
 
 // 判断是否是要展示面包屑的路由

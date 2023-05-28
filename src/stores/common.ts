@@ -2,10 +2,9 @@ import { defineStore } from 'pinia'
 import { login, getRoleById } from '@/request/api'
 import storage from '@/utils/localstorage.js'
 import { UseGetList } from '@/utils/hooks'
-
 import type { RouteRecordRaw } from 'vue-router'
-import { routes } from '@/router/routes'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 export const useCommonStore = defineStore('common', {
   state: () => ({
     token: '',
@@ -27,20 +26,20 @@ export const useCommonStore = defineStore('common', {
   }),
   getters: {
     menuList: (state) => {
-      //   if (import.meta.env.MODE === 'development') {
-      //     router.component = _import(router.component)
-      // } else {
-      //     router.component = modules[`../../views/${router.component}.vue`]
-      // }
-      const modules = import.meta.glob('../views/**/*.vue')
+      const viteComponents = import.meta.glob('../views/**/*.vue')
       const arrayToTree = (items) => {
         let res = []
         let getChildren = (res, pid) => {
           for (const i of items) {
             if (i.pid == pid) {
-              const newItem = { ...i, children: [] }
-              newItem.path && res.push(newItem)
-
+              const newItem = {
+                name: i.name,
+                path: i.path,
+                meta: { title: i.title, icon: i.icon },
+                component: viteComponents[i.component.replace('@/views/', '../views/')],
+                children: []
+              }
+              res.push(newItem)
               getChildren(newItem.children, newItem.name)
             }
           }
@@ -49,6 +48,10 @@ export const useCommonStore = defineStore('common', {
         return res
       }
       const res = arrayToTree(state.permission)
+      const index = res.indexOf(res.filter((item) => item.name == 'home')[0])
+      const item = res.filter((item) => item.name == 'home')[0]
+      res.splice(index, 1)
+      res.unshift(item)
 
       return res
     }
@@ -79,6 +82,7 @@ export const useCommonStore = defineStore('common', {
           message: '登录成功',
           type: 'success'
         })
+        await this.handleRole()
         this.token = res.data.token
         this.isLogin = true
         this.userName = res.data.username

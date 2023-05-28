@@ -18,14 +18,13 @@
 
 <script lang="ts" setup>
 import MenuItem from '@/components/MenuItem.vue'
-import { routes } from '@/router/routes'
 import { useCommonStore } from '@/stores/common'
 import { storeToRefs } from 'pinia'
 
 const { menuList } = storeToRefs(useCommonStore())
 import { useRouter } from 'vue-router'
 const router = useRouter()
-// console.log(router.getRoutes(), 'fkdsl')
+console.log(menuList, 'fkdsl')
 defineProps({
   isCollapse: {
     type: Boolean,
