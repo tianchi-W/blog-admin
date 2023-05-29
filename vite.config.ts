@@ -70,7 +70,7 @@ export default ({ mode }: any) => {
     },
     server: {
       cors: true,
-      host: '0.0.0.0',
+      host: env.VITE_HOST || true,
       open: false,
       port: +env.VITE_PORT || 8001,
       proxy: {
