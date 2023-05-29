@@ -97,7 +97,7 @@ class ThreeJs {
   setFont(): void {
     if (this.scene) {
       const loader = new FontLoader()
-      loader.load('src/assets/helvetiker_regular.typeface.json', (res) => {
+      loader.load('/helvetiker_regular.typeface.json', (res) => {
         const font = new TextGeometry('hello world', {
           font: res,
           size: 1,

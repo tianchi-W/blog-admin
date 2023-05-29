@@ -85,16 +85,12 @@ router.afterEach((to: any, from) => {
   const { visitedRoutes } = storeToRefs(useCommonStore(pinia))
   const { handleAddVisitRoute } = useCommonStore(pinia)
 
-  if (to.meta.showHeader) {
-    return
-  }
+  console.log(to.meta.title, 'kdklk')
   let result = visitedRoutes.value.find((val) => {
     return val.name === to.meta.title
   })
-  if (!result) {
-    if (to.meta.title && to.name == 'home') {
-      handleAddVisitRoute(to)
-    }
+  if (!result && to.meta.title !== 'home' && to.meta.title) {
+    handleAddVisitRoute(to)
   }
 })
 

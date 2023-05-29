@@ -24,8 +24,13 @@
               <el-avatar class="avatar" :src="avatar" />
             </template>
           </el-popconfirm>
-
-          <span style="margin-left: 20px">{{ isLogin ? userName : '请登录' }}</span>
+          <el-popconfirm @confirm="login" :title="isLogin ? '确认要退出吗' : '请登录'">
+            <template #reference>
+              <span style="margin-left: 20px; cursor: pointer">{{
+                isLogin ? userName : '请登录'
+              }}</span>
+            </template>
+          </el-popconfirm>
         </div></el-col
       >
     </el-row>
