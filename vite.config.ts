@@ -68,7 +68,7 @@ export default () => {
     },
     server: {
       cors: true,
-      open: true,
+      open: false,
       port: 8000,
       proxy: {
         '/api': {
