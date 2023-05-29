@@ -11,8 +11,10 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import viteCDNPlugin from 'vite-plugin-cdn-import' //cdn
 import viteCompression from 'vite-plugin-compression'
 const pathSrc = path.resolve(__dirname, 'src')
-export default () => {
-  console.log(process.env.NODE_ENV)
+export default ({ mode }: any) => {
+  //获取环境变量
+  const env = loadEnv(mode, process.cwd())
+  console.log(env.VITE_PORT)
   return defineConfig({
     plugins: [
       vue(),
@@ -68,9 +70,9 @@ export default () => {
     },
     server: {
       cors: true,
-      host: true,
+      host: '0.0.0.0',
       open: false,
-      port: 8000,
+      port: +env.VITE_PORT || 8001,
       proxy: {
         '/api': {
           target: 'http://localhost:50',
