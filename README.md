@@ -45,28 +45,3 @@ npm run build
 npm run lint
 ```
 
-Git 提交规范
-
-> feat 增加新功能
-> fix 修复问题/BUG
-> style 代码风格相关无影响运行结果的
-> perf 优化/性能提升
-> refactor 重构
-> revert 撤销修改
-> test 测试相关
-> docs 文档/注释
-> chore 依赖更新/脚手架配置修改等
-> workflow 工作流改进
-> ci 持续集成
-> types 类型定义文件更改
-> wip 开发中
-> 浏览器支持
-> 本地开发推荐使用 Chrome 80+ 浏览器
-
-支持现代浏览器, 不支持 IE
-
-### 笔记
-
-## elementplus 的使用
-
-> elementuiPlus select 多选时 el-option 绑定的：value 为对象时，要在 el-select 中加入 value-key="\_id"， \_id 是唯一标识的键名
